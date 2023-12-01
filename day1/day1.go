@@ -23,18 +23,20 @@ func Run() {
 }
 
 func Parse(str string) (int, error) {
-	num := ""
+	var first, last string
 
 	for _, c := range str {
 		if unicode.IsNumber(c) {
-			num += string(c)
+			if len(first) == 0 {
+				first = string(c)
+
+			}
+
+			last = string(c)
 		}
 	}
 
-	if len(num) == 1 {
-		num += num
-	}
-
+	num := first + last
 	val, err := strconv.Atoi(num)
 
 	log.Printf("Parse('%s') = %d\n", str, val)

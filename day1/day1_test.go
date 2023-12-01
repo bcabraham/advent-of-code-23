@@ -37,6 +37,18 @@ func TestParseAndSumNumbers(t *testing.T) {
 
 	num, err := day1.ParseAndSumNumbers(input)
 	if want != num || err != nil {
+		t.Fatalf(`ParseAndSumNumbers("%s") = %d, %v, want match for %d, nil`, input, num, err, want)
+	}
+}
+
+// TestParseMultipleNumbers calls day1.Parse with a string, checking
+// for a valid return value.
+func TestParseMultipleNumbers(t *testing.T) {
+	input := "a1b2c3d4e5f"
+	want := 15
+
+	num, err := day1.Parse(input)
+	if want != num || err != nil {
 		t.Fatalf(`Parse("%s") = %d, %v, want match for %d, nil`, input, num, err, want)
 	}
 }
