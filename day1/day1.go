@@ -8,8 +8,13 @@ import (
 	"unicode"
 )
 
+var (
+	testFile    = "/home/babraham/projects/personal/advent-of-code-23/day1/calibration-test.txt"
+	problemFile = "/home/babraham/projects/personal/advent-of-code-23/day1/calibration.txt"
+)
+
 func Run() {
-	lines, err := ReadLines("/home/babraham/projects/personal/advent-of-code-23/day1/calibration-test.txt")
+	lines, err := ReadLines(problemFile)
 	if err != nil {
 		log.Fatal(err)
 	}
