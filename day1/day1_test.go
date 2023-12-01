@@ -29,7 +29,7 @@ func TestParseOneNumber(t *testing.T) {
 	}
 }
 
-// TestParseAndSumNumbers calls day1.Parse with a string, checking
+// TestParseAndSumNumbers calls day1.ParseAndSumNumbers with a slice of strings, checking
 // for a valid return value.
 func TestParseAndSumNumbers(t *testing.T) {
 	input := []string{"1abc2", "treb7uchet"}
