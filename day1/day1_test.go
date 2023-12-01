@@ -28,3 +28,15 @@ func TestParseOneNumber(t *testing.T) {
 		t.Fatalf(`Parse("%s") = %d, %v, want match for %d, nil`, input, num, err, want)
 	}
 }
+
+// TestParseAndSumNumbers calls day1.Parse with a string, checking
+// for a valid return value.
+func TestParseAndSumNumbers(t *testing.T) {
+	input := []string{"1abc2", "treb7uchet"}
+	want := 89
+
+	num, err := day1.ParseAndSumNumbers(input)
+	if want != num || err != nil {
+		t.Fatalf(`Parse("%s") = %d, %v, want match for %d, nil`, input, num, err, want)
+	}
+}
