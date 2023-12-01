@@ -16,3 +16,15 @@ func TestParseTwoNumbers(t *testing.T) {
 		t.Fatalf(`Parse("%s") = %d, %v, want match for %d, nil`, input, num, err, want)
 	}
 }
+
+// TestParseOneNumber calls day1.Parse with a string, checking
+// for a valid return value.
+func TestParseOneNumber(t *testing.T) {
+	input := "treb7uchet"
+	want := 77
+
+	num, err := day1.Parse(input)
+	if want != num || err != nil {
+		t.Fatalf(`Parse("%s") = %d, %v, want match for %d, nil`, input, num, err, want)
+	}
+}

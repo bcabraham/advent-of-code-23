@@ -14,6 +14,10 @@ func Parse(str string) (int, error) {
 		}
 	}
 
+	if len(num) == 1 {
+		num += num
+	}
+
 	val, err := strconv.Atoi(num)
 
 	return val, err
