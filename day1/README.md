@@ -18,3 +18,7 @@ treb7uchet
 In this example, the calibration values of these four lines are 12, 38, 15, and 77. Adding these together produces 142.
 
 Consider your entire calibration document. What is the sum of all of the calibration values?
+
+### Test Cases
+- Case 1: There are two numbers in a line. The first number is the tens digit and the second number is the ones digit.
+- Case 2: There is only one number in a line. That number is both the tens and ones digit.
