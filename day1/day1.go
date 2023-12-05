@@ -4,13 +4,33 @@ import (
 	"bufio"
 	"log"
 	"os"
-	"strconv"
-	"unicode"
+	"regexp"
 )
 
 var (
 	testFile    = "/home/babraham/projects/personal/advent-of-code-23/day1/calibration-test.txt"
+	testFile2   = "/home/babraham/projects/personal/advent-of-code-23/day1/calibration-test-2.txt"
 	problemFile = "/home/babraham/projects/personal/advent-of-code-23/day1/calibration.txt"
+	numMap      = map[string]int{
+		"1":     1,
+		"2":     2,
+		"3":     3,
+		"4":     4,
+		"5":     5,
+		"6":     6,
+		"7":     7,
+		"8":     8,
+		"9":     9,
+		"one":   1,
+		"two":   2,
+		"three": 3,
+		"four":  4,
+		"five":  5,
+		"six":   6,
+		"seven": 7,
+		"eight": 8,
+		"nine":  9,
+	}
 )
 
 func Run() {
@@ -27,32 +47,41 @@ func Run() {
 	log.Println("Total: ", total)
 }
 
-func Parse(str string) (int, error) {
-	var first, last string
+func Parse(regex *regexp.Regexp, str string) (int, error) {
+	var first, last int
 
-	for _, c := range str {
-		if unicode.IsNumber(c) {
-			if len(first) == 0 {
-				first = string(c)
+	log.Println("Parsing", str)
+	matches := regex.FindAllString(str, -1)
 
-			}
-
-			last = string(c)
-		}
+	numMatches := len(matches)
+	log.Println("Matches found:", numMatches)
+	for _, match := range matches {
+		log.Println("\t", match)
 	}
 
-	num := first + last
-	val, err := strconv.Atoi(num)
+	if numMatches > 0 {
+		first = numMap[matches[0]]
+	}
 
-	log.Printf("Parse('%s') = %d\n", str, val)
+	if numMatches == 1 {
+		last = numMap[matches[0]]
+	} else {
+		last = numMap[matches[numMatches-1]]
+	}
 
-	return val, err
+	num := first*10 + last
+
+	log.Printf("Parse('%s') = %d\n", str, num)
+
+	return num, nil
 }
 
 func ParseAndSumNumbers(lines []string) (int, error) {
+	rg, _ := regexp.Compile(`one|two|three|four|five|six|seven|eight|nine|\d`)
+
 	sum := 0
 	for _, line := range lines {
-		num, err := Parse(line)
+		num, err := Parse(rg, line)
 		if err != nil {
 			return sum, err
 		}
