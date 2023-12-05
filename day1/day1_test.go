@@ -16,7 +16,7 @@ func TestParseTwoNumbers(t *testing.T) {
 	input := "1abc2"
 	want := 12
 
-	num, err := day1.Parse(rg, input)
+	num, err := day1.Parse(input)
 	if want != num || err != nil {
 		t.Fatalf(`Parse("%s") = %d, %v, want match for %d, nil`, input, num, err, want)
 	}
@@ -28,7 +28,7 @@ func TestParseOneNumber(t *testing.T) {
 	input := "treb7uchet"
 	want := 77
 
-	num, err := day1.Parse(rg, input)
+	num, err := day1.Parse(input)
 	if want != num || err != nil {
 		t.Fatalf(`Parse("%s") = %d, %v, want match for %d, nil`, input, num, err, want)
 	}
@@ -52,7 +52,7 @@ func TestParseMultipleNumbers(t *testing.T) {
 	input := "a1b2c3d4e5f"
 	want := 15
 
-	num, err := day1.Parse(rg, input)
+	num, err := day1.Parse(input)
 	if want != num || err != nil {
 		t.Fatalf(`Parse("%s") = %d, %v, want match for %d, nil`, input, num, err, want)
 	}

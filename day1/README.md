@@ -43,3 +43,12 @@ zoneight234
 ```
 
 In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Adding these together produces 281.
+
+### Solution
+First, I tried building a buffer of characters, reading from left to right. I was already doing the same thing for numbers, so adding the number-words seemed like a simple first step. The problem with this implementation is the garbage data in each line. I would have had to use two pointers and loop through each line twice to eliminate the bad data.
+
+Next, I tried using a regex with all the possible values "or'd". But this only teturned the first instance of each match and didn't account for overlapping words.
+
+Finally, I used the Index and LastIndex functions from the strings package, looping through the possible tokens (len = 18) for each line (1000). I added separate counters to track the first and last index, updating the first/last numbers when it found a better match.
+
+Answer: 54885

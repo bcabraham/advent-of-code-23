@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"log"
 	"os"
-	"regexp"
+	"strings"
 )
 
 var (
@@ -31,6 +31,26 @@ var (
 		"eight": 8,
 		"nine":  9,
 	}
+	tokens = []string{
+		"1",
+		"2",
+		"3",
+		"4",
+		"5",
+		"6",
+		"7",
+		"8",
+		"9",
+		"one",
+		"two",
+		"three",
+		"four",
+		"five",
+		"six",
+		"seven",
+		"eight",
+		"nine",
+	}
 )
 
 func Run() {
@@ -47,41 +67,38 @@ func Run() {
 	log.Println("Total: ", total)
 }
 
-func Parse(regex *regexp.Regexp, str string) (int, error) {
-	var first, last int
+func Parse(str string) (int, error) {
+	var firstDigit, lastDigit int
+	var firstIndex, lastIndex int = 9999, -9999
 
-	log.Println("Parsing", str)
-	matches := regex.FindAllString(str, -1)
+	for _, token := range tokens {
+		i := strings.Index(str, token)
+		j := strings.LastIndex(str, token)
 
-	numMatches := len(matches)
-	log.Println("Matches found:", numMatches)
-	for _, match := range matches {
-		log.Println("\t", match)
+		if i >= 0 && i < firstIndex {
+			firstIndex = i
+			firstDigit = numMap[token]
+			log.Printf("\tFound %s at index: %d\n", token, i)
+		}
+
+		if j >= 0 && j > lastIndex {
+			lastIndex = j
+			lastDigit = numMap[token]
+			log.Printf("\tFound %s at index: %d\n", token, j)
+		}
 	}
 
-	if numMatches > 0 {
-		first = numMap[matches[0]]
-	}
-
-	if numMatches == 1 {
-		last = numMap[matches[0]]
-	} else {
-		last = numMap[matches[numMatches-1]]
-	}
-
-	num := first*10 + last
-
+	num := firstDigit*10 + lastDigit
 	log.Printf("Parse('%s') = %d\n", str, num)
 
 	return num, nil
 }
 
 func ParseAndSumNumbers(lines []string) (int, error) {
-	rg, _ := regexp.Compile(`one|two|three|four|five|six|seven|eight|nine|\d`)
-
 	sum := 0
-	for _, line := range lines {
-		num, err := Parse(rg, line)
+	for i, line := range lines {
+		log.Printf("Parsing %d %s\n", i+1, line)
+		num, err := Parse(line)
 		if err != nil {
 			return sum, err
 		}
