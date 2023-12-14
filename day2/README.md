@@ -35,18 +35,17 @@ Determine which games would have been possible if the bag had been loaded with o
 Data:
 - Game
     - id
-    - Reveals: []Reveal
+    - Reveals: [][]Reveal
 - Reveal
     - Count
     - Color
-- ReferenceCube
-    - Count
-    - Color
+- ReferenceCube: map[string]int
 
-Tests:
-- LoadGame(str) -> Game
-- LoadReveals([]str) -> []Reveal
-- LoadReferenceCubes([]str) -> []ReferenceCube
-- IsGamePossible(game, refCubes) -> bool
-- GetPossibleGames([]game, refCubes) -> []game
-- SumGameIDs([]game) -> int
+Funcs:
+- loadGame(str) -> Game
+- loadReveals([]str) -> []Reveal
+- isGamePossible(game, refCubes) -> bool
+
+Answer: 2810
+
+
