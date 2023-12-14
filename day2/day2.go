@@ -20,11 +20,11 @@ func Run() {
 		log.Fatal(err)
 	}
 
-	referenceCubes := map[string]int{
-		"red":   12,
-		"green": 13,
-		"blue":  14,
-	}
+	// referenceCubes := map[string]int{
+	// 	"red":   12,
+	// 	"green": 13,
+	// 	"blue":  14,
+	// }
 
 	games := []Game{}
 	for _, line := range lines {
@@ -35,15 +35,14 @@ func Run() {
 
 	sum := 0
 	for _, game := range games {
-		isPossible := isGamePossible(game, referenceCubes)
-		fmt.Printf("Game %d IsGamePossible ? %t\n", game.ID, isPossible)
+		// isPossible := isGamePossible(game, referenceCubes)
+		// fmt.Printf("Game %d IsGamePossible ? %t\n", game.ID, isPossible)
 
-		if isPossible {
-			sum += game.ID
-		}
+		minCubes := getMinCubes(game)
+		sum += getPowerSet(minCubes)
 	}
 
-	fmt.Println("sum of the IDs:", sum)
+	fmt.Println("Product of the sets:", sum)
 }
 
 type Game struct {
@@ -54,6 +53,38 @@ type Game struct {
 type Subset struct {
 	Count int
 	Color string
+}
+
+func getMinCubes(game Game) map[string]int {
+	minCubes := map[string]int{
+		"red":   -1,
+		"blue":  -1,
+		"green": -1,
+	}
+
+	for _, subsets := range game.Subsets {
+		for _, subset := range subsets {
+			if subset.Count > minCubes[subset.Color] {
+				minCubes[subset.Color] = subset.Count
+			}
+		}
+	}
+
+	fmt.Printf("Game %d: %+v\n", game.ID, minCubes)
+
+	return minCubes
+}
+
+func getPowerSet(set map[string]int) int {
+	product := 1
+
+	for _, count := range set {
+		product *= count
+	}
+
+	fmt.Printf("PowerSet %+v = %d\n", set, product)
+
+	return product
 }
 
 func isGamePossible(game Game, refCubes map[string]int) bool {
